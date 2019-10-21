@@ -2,6 +2,9 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <sys/types.h>
+#include <ctime>
+#include <chrono>
+#include <sys/utsname.h>
 
 using namespace std;
 
@@ -20,10 +23,39 @@ void getOSDetails()
     cout << hostName;
 }
 
+void sysInfo()
+{
+    struct utsname buffer;
+
+    errno = 0;
+    if (uname(&buffer) != 0)
+    {
+        perror("uname");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("system name = %s\n", buffer.sysname);
+    printf("node name   = %s\n", buffer.nodename);
+    printf("release     = %s\n", buffer.release);
+    printf("version     = %s\n", buffer.version);
+    printf("machine     = %s\n", buffer.machine);
+
+#ifdef _GNU_SOURCE
+    printf("domain name = %s\n", buffer.domainname);
+#endif
+
+    // return EXIT_SUCCESS;
+}
+
 int main()
 
 {
     const char *appname = "Wobbling fit 2 params";
     runApp(appname);
+    auto finishTime = chrono::system_clock::now();
+    time_t showDate = chrono::system_clock::to_time_t(finishTime);
+    sysInfo();
+    cout
+        << ctime(&showDate) << "\n";
     return 0;
 }
