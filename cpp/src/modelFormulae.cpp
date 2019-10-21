@@ -1,4 +1,4 @@
-nertiaMoment(double izero, double beta, double gamma, int k)
+double inertiaMoment(double izero, double beta, double gamma, int k)
 {
     double rez, pi = 3.141592654;
     rez = (double)izero / (1.0 + sqrt(5.0 / (16.0 * pi)) * beta) * (1.0 - sqrt(5.0 / (4.0 * pi)) * beta * cos(gamma + 2.0 / 3.0 * pi * k));
