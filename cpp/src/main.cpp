@@ -58,9 +58,7 @@ cout<<i<<" "<<i+1<<"\n";
 #pragma omp parallel
 
   {
-
-    printf("https://helloacm.com\n");     
-
+    printf("https://helloacm.com\n");
   }
 }
 
