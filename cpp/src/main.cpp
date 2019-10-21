@@ -6,6 +6,9 @@
 #include <chrono>
 #include <sys/utsname.h>
 
+//optional OMP
+#include<omp.h>
+
 using namespace std;
 
 void runApp(const char *appname)
@@ -47,6 +50,22 @@ void sysInfo()
     // return EXIT_SUCCESS;
 }
 
+void runParallel()
+{
+#pragma omp parallel for
+for(int i=0;i<4;++i)
+cout<<i<<" "<<i+1<<"\n";
+#pragma omp parallel
+
+  {
+
+    printf("https://helloacm.com\n");     
+
+  }
+}
+
+
+
 int main()
 
 {
@@ -55,7 +74,7 @@ int main()
     auto finishTime = chrono::system_clock::now();
     time_t showDate = chrono::system_clock::to_time_t(finishTime);
     sysInfo();
-    cout
-        << ctime(&showDate) << "\n";
-    return 0;
+    cout << ctime(&showDate) << "\n";
+    runParallel(); 
+   return 0;
 }
