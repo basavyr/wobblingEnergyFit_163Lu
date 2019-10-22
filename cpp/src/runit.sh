@@ -1,0 +1,2 @@
+make
+../bin/a.out
