@@ -6,7 +6,6 @@
 class EnergyCalculus
 {
 private:
-    const double PI = 3.141592654;
     const double BETA = 0.38;
     double a1, a2, a3;
     double inertiaMoment(double izero, double gamma, int k);
@@ -22,6 +21,7 @@ private:
     double minHamiltonian(double spin, double oddSpin, double izero, double gamma, double particlePotential);
 
 public:
+    const double PI = 3.141592654;
     double Omega1(double spin, double oddSpin, double izero, double gamma, double particlePotential);
     double Omega2(double spin, double oddSpin, double izero, double gamma, double particlePotential);
     double energyTSD1(double spin, double izero, double gamma, double particlePotential);
