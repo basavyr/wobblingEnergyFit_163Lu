@@ -35,6 +35,13 @@ public:
     double squaredSum3(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size);
     double squaredSum4(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size);
     double rootMeanSquare(double izero, double gamma, double particlePotential);
+
+    //Debugging function
+public:
+    void squaredSumDebug1(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size, double &result);
+    void squaredSumDebug2(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size, double &result);
+    void squaredSumDebug3(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size, double &result);
+    void squaredSumDebug4(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size, double &result);
 };
 
 #endif
