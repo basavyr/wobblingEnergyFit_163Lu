@@ -20,7 +20,7 @@ void calculateMinimumValue()
     double minValue = 98765432123456789.0;
     EnergyCalculus Lu163;
     double temp;
-    for (int izero = 1; izero <= 200; ++izero)
+    for (int izero = 50; izero <= 120; ++izero)
     {
         for (int gamma = 0; gamma <= 60; ++gamma)
         {
