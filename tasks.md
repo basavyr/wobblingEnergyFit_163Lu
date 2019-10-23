@@ -1,0 +1,1 @@
+1. make energy functions void (for debugging)

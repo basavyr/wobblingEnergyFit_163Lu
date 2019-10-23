@@ -2,6 +2,7 @@
 #include "expData.h"
 
 #include <cmath>
+#include <iostream>
 
 double EnergyCalculus::inertiaMoment(double izero, double gamma, int k)
 {
@@ -187,7 +188,7 @@ double EnergyCalculus::squaredSum1(double izero, double gamma, double particlePo
     }
     if (sum && count == size)
         return (double)sum / size;
-    return 0;
+    return 9876543210;
 }
 
 double EnergyCalculus::squaredSum2(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size)
@@ -217,7 +218,7 @@ double EnergyCalculus::squaredSum2(double izero, double gamma, double particlePo
     }
     if (sum && count == size)
         return (double)sum / size;
-    return 0;
+    return 9876543210;
 }
 
 double EnergyCalculus::squaredSum3(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size)
@@ -247,7 +248,7 @@ double EnergyCalculus::squaredSum3(double izero, double gamma, double particlePo
     }
     if (sum && count == size)
         return (double)sum / size;
-    return 0;
+    return 9876543210;
 }
 
 double EnergyCalculus::squaredSum4(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size)
@@ -277,7 +278,7 @@ double EnergyCalculus::squaredSum4(double izero, double gamma, double particlePo
     }
     if (sum && count == size)
         return (double)sum / size;
-    return 0;
+    return 9876543210;
 }
 
 double EnergyCalculus::rootMeanSquare(double izero, double gamma, double particlePotential)
@@ -289,4 +290,156 @@ double EnergyCalculus::rootMeanSquare(double izero, double gamma, double particl
     sum3 = squaredSum3(izero, gamma, particlePotential, Lu163.tsd3Exp, Lu163.spin3Exp, Lu163.dim3);
     sum4 = squaredSum4(izero, gamma, particlePotential, Lu163.tsd4Exp, Lu163.spin4Exp, Lu163.dim4);
     return (double)sum1 + sum2 + sum3 + sum4;
+}
+
+//Debugging
+
+void EnergyCalculus::squaredSumDebug1(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size, double &result)
+{
+    double sum = 0.0;
+    double temp;
+    bool ok = true;
+    int count = 0;
+    while (ok)
+    {
+        for (int i = 0; i < size && ok; ++i)
+        {
+            temp = pow(energy[i] - energyTSD1(spin[i], izero, gamma, particlePotential), 2.0) / energy[i];
+            std::cout << count << " " << i << " " << temp << " " << energy[i] << " " << energyTSD1(spin[i], izero, gamma, particlePotential) << "\n";
+            if (isnan(temp))
+            {
+                std::cout << "is nan TRUE for temp = " << temp << " and index= " << i << "\n";
+                ok = false;
+                break;
+            }
+            if (!isnan(temp))
+            {
+                sum += temp;
+                std::cout << "is nan FALSE for temp = " << temp << " and index= " << i << "\n";
+                count++;
+            }
+        }
+        if (ok)
+            ok = false;
+    }
+    result = 9876543210.0;
+    if (sum && count == size)
+    {
+        std::cout << "SUM CHECKS!"
+                  << "\n";
+        std::cout << (double)sum / size << "\n";
+        result = (double)sum / size;
+    }
+}
+
+void EnergyCalculus::squaredSumDebug2(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size, double &result)
+{
+    double sum = 0.0;
+    double temp;
+    bool ok = true;
+    int count = 0;
+    while (ok)
+    {
+        for (int i = 0; i < size && ok; ++i)
+        {
+            temp = pow(energy[i] - energyTSD2(spin[i], izero, gamma, particlePotential), 2.0) / energy[i];
+            std::cout << count << " " << i << " " << temp << " " << energy[i] << " " << energyTSD2(spin[i], izero, gamma, particlePotential) << "\n";
+            if (isnan(temp))
+            {
+                std::cout << "is nan TRUE for temp = " << temp << " and index= " << i << "\n";
+                ok = false;
+                break;
+            }
+            if (!isnan(temp))
+            {
+                sum += temp;
+                std::cout << "is nan FALSE for temp = " << temp << " and index= " << i << "\n";
+                count++;
+            }
+        }
+        if (ok)
+            ok = false;
+    }
+    result = 9876543210.0;
+    if (sum && count == size)
+    {
+        std::cout << "SUM CHECKS!"
+                  << "\n";
+        std::cout << (double)sum / size << "\n";
+        result = (double)sum / size;
+    }
+}
+void EnergyCalculus::squaredSumDebug3(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size, double &result)
+{
+    double sum = 0.0;
+    double temp;
+    bool ok = true;
+    int count = 0;
+    while (ok)
+    {
+        for (int i = 0; i < size && ok; ++i)
+        {
+            temp = pow(energy[i] - energyTSD3(spin[i], izero, gamma, particlePotential), 2.0) / energy[i];
+            std::cout << count << " " << i << " " << temp << " " << energy[i] << " " << energyTSD3(spin[i], izero, gamma, particlePotential) << "\n";
+            if (isnan(temp))
+            {
+                std::cout << "is nan TRUE for temp = " << temp << " and index= " << i << "\n";
+                ok = false;
+                break;
+            }
+            if (!isnan(temp))
+            {
+                sum += temp;
+                std::cout << "is nan FALSE for temp = " << temp << " and index= " << i << "\n";
+                count++;
+            }
+        }
+        if (ok)
+            ok = false;
+    }
+    result = 9876543210.0;
+    if (sum && count == size)
+    {
+        std::cout << "SUM CHECKS!"
+                  << "\n";
+        std::cout << (double)sum / size << "\n";
+        result = (double)sum / size;
+    }
+}
+void EnergyCalculus::squaredSumDebug4(double izero, double gamma, double particlePotential, const double energy[], const double spin[], int size, double &result)
+{
+    double sum = 0.0;
+    double temp;
+    bool ok = true;
+    int count = 0;
+    while (ok)
+    {
+        for (int i = 0; i < size && ok; ++i)
+        {
+            temp = pow(energy[i] - energyTSD4(spin[i], izero, gamma, particlePotential), 2.0) / energy[i];
+            std::cout << count << " " << i << " " << temp << " " << energy[i] << " " << energyTSD4(spin[i], izero, gamma, particlePotential) << "\n";
+            if (isnan(temp))
+            {
+                std::cout << "is nan TRUE for temp = " << temp << " and index= " << i << "\n";
+                ok = false;
+                break;
+            }
+            if (!isnan(temp))
+            {
+                sum += temp;
+                std::cout << "is nan FALSE for temp = " << temp << " and index= " << i << "\n";
+                count++;
+            }
+        }
+        if (ok)
+            ok = false;
+    }
+    result = 9876543210.0;
+    if (sum && count == size)
+    {
+        std::cout << "SUM CHECKS!"
+                  << "\n";
+        std::cout << (double)sum / size << "\n";
+        result = (double)sum / size;
+    }
 }
