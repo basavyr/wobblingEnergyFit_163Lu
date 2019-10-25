@@ -18,10 +18,10 @@ private:
     double subTerm4(double spin, double oddSpin, double izero, double gamma, double particlePotential);
     double bigTerm1(double spin, double oddSpin, double izero, double gamma, double particlePotential);
     double bigTerm2(double spin, double oddSpin, double izero, double gamma, double particlePotential);
-    double minHamiltonian(double spin, double oddSpin, double izero, double gamma, double particlePotential);
 
 public:
     const double PI = 3.141592654;
+    double minHamiltonian(double spin, double oddSpin, double izero, double gamma, double particlePotential);
 
     //order of the frequencies from PRC2017
     double Omega1(double spin, double oddSpin, double izero, double gamma, double particlePotential);

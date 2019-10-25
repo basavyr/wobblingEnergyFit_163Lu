@@ -131,7 +131,7 @@ int main()
     //sysInfo();
     params results;
     auto startTime = chrono::high_resolution_clock::now();
-    gout << "*** PRC ORDERING FOR OMEGA ****"
+    /*   gout << "*** PRC ORDERING FOR OMEGA ****"
          << "\n";
     cout << "*** PRC ORDERING FOR OMEGA ****"
          << "\n";
@@ -144,6 +144,7 @@ int main()
     calculateMinimumValueReversed(results);
     showResults(results);
     Lu163.showEnergies(results.I0, results.GM * Lu163.PI / 180.0, results.V);
+   */
     auto endTime = chrono::high_resolution_clock::now();
     auto execTime = chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count();
     // energyDebug();
