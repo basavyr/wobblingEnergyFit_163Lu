@@ -1,5 +1,5 @@
-#include "energyExpressions.h"
-#include "expData.h"
+#include "../include/energyExpressions.h"
+#include "../include/expData.h"
 
 #include <cmath>
 #include <iostream>

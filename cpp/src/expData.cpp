@@ -1,4 +1,4 @@
-#include "expData.h"
+#include "../include/expData.h"
 #include <iostream>
 #include <cstring>
 

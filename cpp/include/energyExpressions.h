@@ -71,6 +71,7 @@ public:
 public:
     void showFrequencies(double izero, double gamma, double particlePotential);
     void showEnergies(double izero, double gamma, double particlePotential);
+
 };
 
 #endif
