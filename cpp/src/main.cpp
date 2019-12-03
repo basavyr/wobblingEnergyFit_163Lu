@@ -41,6 +41,7 @@ void energyDebug()
     cout << "RMS result= " << res << "\n";
 }
 
+ofstream shiftedOutout("../output/shiftedEnergies.out");
 ofstream gout("../output/Lu163.out");
 
 typedef struct parameterSet
@@ -134,13 +135,31 @@ void shifteTwoParamsMinimum(params &results, double shift)
     }
 }
 
-ofstream shiftedOutout("../output/shiftedEnergies.out");
-
 void showOutput(params P)
 {
-    cout << "I0 = " << P.I0 << "\n";
+    // cout << "I0 = " << P.I0 << "\n";
     cout << "V = " << P.V << "\n";
     cout << "RMS = " << P.RMS << "\n";
+    //shiftedOutout << "{ " << P.V << " , " << P.RMS << "} ,";
+}
+
+void shiftedTwoParamsMinimumFixedI0(params &results, double shift)
+{
+    double minValue = 98765432123456789.0;
+    double temp = 0;
+    TwoParams twoparams;
+    results.I0 = 53.0;
+    for (double V = 0.1; V <= 10.0; V += 0.1)
+    {
+        temp = twoparams.shiftedSquaredSum(53.0, V, shift);
+        minValue = temp;
+        results.V = V;
+        results.RMS = minValue;
+        //showOutput(results);
+        results.shiftedRMS.push_back(results.RMS);
+        results.shiftedI0.push_back(results.I0);
+        results.shiftedV.push_back(results.V);
+    }
 }
 
 void generatePlotData(double izero, double particlePotential, double shift)
@@ -149,20 +168,53 @@ void generatePlotData(double izero, double particlePotential, double shift)
     params.plotDataMathematica(izero, particlePotential, shift);
 }
 
+void keepRunningFixedI0(int k)
+{
+    params results;
+    //shiftedOutout << "{ ";
+    while (k >= 0)
+    {
+        auto shifttt = 0.1 * k;
+        shiftedTwoParamsMinimumFixedI0(results, shift);
+        auto minElementIndex = std::min_element(results.shiftedRMS.begin(), results.shiftedRMS.end()) - results.shiftedRMS.begin();
+        /*  shiftedOutout << "{ ";
+        for (auto &n : results.shiftedRMS)
+        {
+            shiftedOutout << n << " , ";
+        }
+        shiftedOutout << " } \n ";
+        shiftedOutout << "Minimal set of shifted parameters is: \n";
+        shiftedOutout << "E_shift = " << shift << "\n";
+        shiftedOutout << "I0 = " << results.shiftedI0.at(minElementIndex) << "\n";
+        shiftedOutout << "V = " << results.shiftedV.at(minElementIndex) << "\n";
+        shiftedOutout << "RMS = " << results.shiftedRMS.at(minElementIndex) << "\n";
+        */
+        shiftedOutout << results.shiftedV.at(minElementIndex) << " , " << results.shiftedRMS.at(minElementIndex) << " , " << shift << endl;
+        results.shiftedI0.clear();
+        results.shiftedV.clear();
+        results.shiftedRMS.clear();
+        k--;
+    }
+    //shiftedOutout << "} ;";
+}
+
 void keepRunningIt(int k)
 {
     params results;
+    shiftedOutout << "{ ";
     while (k >= 0)
     {
         auto shift = 0.1 * k;
-        shifteTwoParamsMinimum(results, shift);
-        //showOutput(results);
+        shiftedTwoParamsMinimumFixedI0(results, shift);
+        showOutput(results);
         results.shiftedRMS.push_back(results.RMS);
         results.shiftedI0.push_back(results.I0);
         results.shiftedV.push_back(results.V);
-        cout << "\n";
         k--;
     }
+    shiftedOutout << "};"
+                  << "\n";
+    cout << "\n";
     shiftedOutout << "{ ";
     for (auto &n : results.shiftedRMS)
     {
@@ -203,7 +255,10 @@ int main()
     showResults(results);
     Lu163.showEnergies(results.I0, results.GM * Lu163.PI / 180.0, results.V);
    */
-    keepRunningIt(15);
+    keepRunningFixedI0(15);
+    /* params results;
+    shifteTwoParamsMinimumFixedV(results, 0.0);
+     */
     auto endTime = chrono::high_resolution_clock::now();
     auto execTime = chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count();
     // energyDebug();
@@ -211,6 +266,5 @@ int main()
     cout << "RMS value parameter set calculation took " << (double)execTime / 1000.0 << " seconds\n";
     cout << "\n";
     showDate();
-
     return 0;
 }
